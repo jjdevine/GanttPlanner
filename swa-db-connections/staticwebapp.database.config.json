@@ -1,0 +1,87 @@
+{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/latest/download/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "options": {
+      "set-session-context": false
+    },
+    "connection-string": "@env('DATABASE_CONNECTION_STRING')"
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/rest"
+    },
+    "graphql": {
+      "enabled": true,
+      "path": "/graphql",
+      "allow-introspection": true
+    },
+    "host": {
+      "mode": "production",
+      "cors": {
+        "origins": [],
+        "allow-credentials": false
+      },
+      "authentication": {
+        "provider": "StaticWebApps"
+      }
+    }
+  },
+  "entities": {
+    "Task": {
+      "source": {
+        "object": "gantt.Tasks",
+        "type": "table"
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/task"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Task",
+          "plural": "tasks"
+        }
+      },
+      "permissions": [
+        {
+          "role": "authenticated",
+          "actions": [
+            {
+              "action": "create",
+              "fields": {
+                "include": ["Person", "TaskName", "StartDate", "EndDate", "CapacityImpact", "Complete", "MilestonesJson"]
+              }
+            },
+            {
+              "action": "read"
+            },
+            {
+              "action": "update",
+              "fields": {
+                "include": ["Person", "TaskName", "StartDate", "EndDate", "CapacityImpact", "Complete", "MilestonesJson"]
+              }
+            },
+            {
+              "action": "delete"
+            }
+          ]
+        }
+      ],
+      "mappings": {
+        "Id": "id",
+        "Person": "person",
+        "TaskName": "taskName",
+        "StartDate": "startDate",
+        "EndDate": "endDate",
+        "CapacityImpact": "capacityImpact",
+        "Complete": "complete",
+        "MilestonesJson": "milestonesJson",
+        "CreatedUtc": "createdUtc",
+        "UpdatedUtc": "updatedUtc"
+      }
+    }
+  }
+}

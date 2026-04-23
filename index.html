@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>📝 Gantt Task Planner</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+    <div class="top-bar">
+        <h1 style="margin:0">Gantt Planner</h1>
+        <div id="userBar"></div>
+    </div>
+
+    <div class="top-bar">
+        <div class="controls">
+            <label for="scale">Future window:</label>
+            <select id="scale">
+                <option value="3w">3 weeks</option>
+                <option value="3m" selected>3 months</option>
+                <option value="1y">1 year</option>
+            </select>
+            <button id="applyScale">Apply</button>
+            <span id="syncStatus"></span>
+        </div>
+        <div class="top-buttons">
+            <button id="refreshBtn">Reload from DB</button>
+            <button id="downloadBtnTop">Download JSON</button>
+            <button id="personImportExportBtn">Person import/export</button>
+            <button id="quickAddBtn">Quick add task</button>
+        </div>
+    </div>
+
+    <div id="container">
+        <div id="left">
+            <div id="chart" class="panel">
+                <svg id="svg"></svg>
+            </div>
+            <div class="panel">
+                <textarea id="json" readonly aria-label="Read-only JSON view of current tasks"></textarea>
+                <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                    <span class="modal-note" style="color:#cfe">
+                        Read-only snapshot. Edit tasks via the chart or the &ldquo;Quick add&rdquo; / &ldquo;Person import/export&rdquo; buttons. Use &ldquo;Reload from DB&rdquo; to pick up other users&rsquo; changes.
+                    </span>
+                    <div id="msg" style="flex:1"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="right">
+            <div id="capacityPanel" class="panel">
+                <h3>Capacity impact</h3>
+                <div class="item"><input type="checkbox" id="capHigh"   checked /><label for="capHigh">High</label></div>
+                <div class="item"><input type="checkbox" id="capMedium" checked /><label for="capMedium">Medium</label></div>
+                <div class="item"><input type="checkbox" id="capLow"    checked /><label for="capLow">Low</label></div>
+            </div>
+
+            <div id="statusPanel" class="panel">
+                <h3>Status</h3>
+                <div class="item"><input type="checkbox" id="hideCompleted" checked /><label for="hideCompleted">Hide completed</label></div>
+            </div>
+
+            <div id="milestonePanel" class="panel">
+                <h3>Milestones</h3>
+                <div class="item"><input type="checkbox" id="showMilestones" checked /><label for="showMilestones">Show milestones</label></div>
+            </div>
+
+            <div id="toggles" class="panel">
+                <h3>Tasks shown</h3>
+                <div id="toggleList" role="group" aria-label="Toggle tasks"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick add / edit task modal -->
+    <div id="quickModal" class="modal-backdrop modal-hidden" aria-modal="true" role="dialog">
+        <div class="modal-panel">
+            <h2 id="quickModalTitle">Quick add task</h2>
+            <form id="quickForm">
+                <div class="modal-row">
+                    <label for="qmPerson">Person</label>
+                    <input id="qmPerson" type="text" list="personDatalist" required />
+                    <datalist id="personDatalist"></datalist>
+                </div>
+                <div class="modal-row">
+                    <label for="qmTask">Task</label>
+                    <input id="qmTask" type="text" required />
+                </div>
+                <div class="modal-row-inline">
+                    <input id="qmNoStart" type="checkbox" />
+                    <label for="qmNoStart">Unknown start date (floating)</label>
+                </div>
+                <div class="modal-row">
+                    <label for="qmStart">Start date</label>
+                    <input id="qmStart" type="date" required />
+                </div>
+                <div class="modal-row">
+                    <label for="qmEnd">End date (optional)</label>
+                    <input id="qmEnd" type="date" />
+                </div>
+                <div class="modal-row">
+                    <label for="qmImpact">Capacity impact</label>
+                    <select id="qmImpact">
+                        <option value="high">High</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <div class="modal-row-inline">
+                    <input id="qmComplete" type="checkbox" />
+                    <label for="qmComplete">Complete</label>
+                </div>
+
+                <div class="modal-row">
+                    <label>Milestones</label>
+                    <div id="milestoneList"></div>
+                    <button type="button" id="addMilestoneBtn">Add milestone</button>
+                </div>
+
+                <div id="quickError"></div>
+                <div class="modal-actions">
+                    <div class="modal-actions-left">
+                        <button type="button" id="qmDelete" style="display:none;background:#fbb">Delete</button>
+                    </div>
+                    <button type="button" id="quickCancel">Cancel</button>
+                    <button type="submit" id="quickSubmit">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Person import/export modal -->
+    <div id="personModal" class="modal-backdrop modal-hidden" aria-modal="true" role="dialog">
+        <div class="modal-panel">
+            <h2>Person import/export</h2>
+            <form id="personForm" onsubmit="return false">
+                <div class="modal-row">
+                    <label for="personName">Person</label>
+                    <select id="personName" required>
+                        <option value="">Select a person...</option>
+                    </select>
+                </div>
+                <div class="modal-row">
+                    <label for="personJsonArea">Tasks JSON</label>
+                    <textarea id="personJsonArea" spellcheck="false"></textarea>
+                    <div class="modal-note">
+                        Export produces <code>{"tasks":[ ... ]}</code>. Import accepts either this object or a bare array of tasks.
+                        All imported tasks are reassigned to the selected person and <strong>replace</strong> that person&rsquo;s existing tasks in the database.
+                    </div>
+                </div>
+                <div id="personError"></div>
+                <div class="modal-actions">
+                    <div class="modal-actions-left">
+                        <button type="button" id="personExportBtn">Export</button>
+                        <button type="button" id="personImportBtn">Import &amp; replace</button>
+                    </div>
+                    <button type="button" id="personCancelBtn">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script type="module" src="/js/app.js"></script>
+</body>
+</html>
