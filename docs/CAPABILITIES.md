@@ -39,9 +39,9 @@ A walkthrough of what the Gantt planner does and how to use each feature. The be
 
 ## Authentication
 
-- The SWA `staticwebapp.config.json` requires authentication for every route (`/*` and `/data-api/*`).
+- The SWA `web/staticwebapp.config.json` requires authentication for every route (`/*` and `/data-api/*`).
 - Unauthenticated requests are redirected to `/.auth/login/aad`.
-- The data-API permissions in `swa-db-connections/staticwebapp.database.config.json` only grant CRUD to the `authenticated` role.
+- The data-API permissions in `web/swa-db-connections/staticwebapp.database.config.json` only grant CRUD to the `authenticated` role.
 - The user-bar in the top-right shows your name and a **log out** link.
 
 ## Tasks

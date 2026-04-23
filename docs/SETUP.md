@@ -19,7 +19,7 @@ You configure exactly **one** thing: a connection string, in the SWA portal.
 
 - An Azure subscription
 - Azure CLI (`az`) and `sqlcmd` (or Azure Data Studio / SSMS) installed locally — only needed to run the schema script
-- A GitHub account (the simplest way to deploy SWA)
+- A GitHub account is optional (only needed if you choose GitHub-linked CI/CD)
 - Node.js 18+ (only if you want to use the JSON → SQL migration generator)
 
 ---
@@ -31,11 +31,10 @@ You can do this in the portal, but here's the CLI version. Pick names that are u
 ```powershell
 $rg          = "rg-gantt"
 $location    = "uksouth"
-$sqlServer   = "sql-gantt-$(Get-Random)"
+$sqlServer   = "sql-gantt"
 $sqlDb       = "ganttdb"
 $sqlAdmin    = "ganttadmin"
-$sqlPassword = (Read-Host -AsSecureString "SQL admin password") `
-               | ConvertFrom-SecureString -AsPlainText
+$sqlPassword = Read-Host "SQL admin password" -MaskInput
 
 az group create -n $rg -l $location
 
@@ -69,7 +68,7 @@ Run [`sql/01-schema.sql`](../sql/01-schema.sql) against the new database. Replac
 
 ```powershell
 sqlcmd -S "$sqlServer.database.windows.net" -d $sqlDb `
-       -U $sqlAdmin -P $sqlPassword -G `
+       -U $sqlAdmin -P $sqlPassword `
        -i sql/01-schema.sql
 ```
 
@@ -85,7 +84,7 @@ If you have a `tasks.json` exported from the old standalone app, generate an `IN
 node sql/generate-migration-sql.js path/to/your-tasks.json > sql/03-import.sql
 
 sqlcmd -S "$sqlServer.database.windows.net" -d $sqlDb `
-       -U $sqlAdmin -P $sqlPassword -G `
+       -U $sqlAdmin -P $sqlPassword `
        -i sql/03-import.sql
 ```
 
@@ -97,26 +96,34 @@ The generator preserves every field (person, task, dates, capacityImpact, comple
 
 ## 4. Deploy the static site to Azure Static Web Apps
 
-The fastest path is to push this repo to GitHub and let SWA wire up CI/CD itself.
+Recommended: create SWA without GitHub repo linkage, then deploy from the local `web/` publish folder with a deployment token.
 
 ```powershell
 $swaName = "swa-gantt"
 
+# 1) Create the Static Web App (no GitHub OAuth consent required)
 az staticwebapp create `
     -n $swaName -g $rg -l "westeurope" `
-    --source https://github.com/<your-org>/<your-repo> `
-    --branch main `
-    --app-location "/" `
-    --api-location "" `
-    --output-location "" `
-    --login-with-github
+    --sku Free
+
+# 2) Get a one-time deployment token
+$deployToken = az staticwebapp secrets list `
+    -n $swaName -g $rg `
+    --query properties.apiKey -o tsv
+
+# 3) Deploy only runtime web assets
+npm install -g @azure/static-web-apps-cli
+swa deploy web --deployment-token $deployToken --env production
 ```
 
 Notes:
 
-- `app-location "/"` — `index.html` is at the repo root.
-- `api-location ""` — there is no Functions backend; we use Database Connections instead.
-- The `swa-db-connections/` folder is auto-discovered by SWA (this is the convention DAB looks for).
+- Deploying `web/` ensures docs, SQL scripts, and misc root files are not published.
+- There is no Functions backend; Database Connections handles data APIs.
+- The `web/swa-db-connections/` folder is auto-discovered by SWA.
+- Treat `$deployToken` like a secret; rotate it if exposed.
+
+Optional: if you still want GitHub-linked CI/CD, use `az staticwebapp create` with `--source` and set app location to `web`.
 
 ---
 
@@ -127,7 +134,7 @@ This is the **only** place a connection string ever lives.
 1. In the Azure portal, open the Static Web App resource.
 2. Left nav: **Settings → Database connection**.
 3. Click **Link existing database**, choose your SQL server + `ganttdb`, and provide a SQL login (or set up a managed-identity login — see the appendix).
-4. SWA writes the connection string into a setting called `DATABASE_CONNECTION_STRING`, which the bundled `swa-db-connections/staticwebapp.database.config.json` reads via `@env('DATABASE_CONNECTION_STRING')`.
+4. SWA writes the connection string into a setting called `DATABASE_CONNECTION_STRING`, which the bundled `web/swa-db-connections/staticwebapp.database.config.json` reads via `@env('DATABASE_CONNECTION_STRING')`.
 
 After saving, the endpoint `https://<your-swa>.azurestaticapps.net/data-api/graphql` becomes live and protected by SWA auth.
 
@@ -135,7 +142,7 @@ After saving, the endpoint `https://<your-swa>.azurestaticapps.net/data-api/grap
 
 ## 6. Sign in
 
-Browse to the SWA URL. You'll be redirected to Azure AD login (configured in [`staticwebapp.config.json`](../staticwebapp.config.json)). After signing in, the chart loads from the database.
+Browse to the SWA URL. You'll be redirected to Azure AD login (configured in [`web/staticwebapp.config.json`](../web/staticwebapp.config.json)). After signing in, the chart loads from the database.
 
 If you're the only user and want to add others, you don't need any role assignments — every authenticated user gets the built-in `authenticated` role, which is what the data-API permissions use.
 
@@ -151,11 +158,11 @@ npm install -g @azure/static-web-apps-cli @azure/data-api-builder
 # 1. Set the connection string for DAB
 $env:DATABASE_CONNECTION_STRING = "Server=tcp:$sqlServer.database.windows.net,1433;Database=$sqlDb;User ID=$sqlAdmin;Password=$sqlPassword;Encrypt=True;"
 
-# 2. Start DAB (uses the JSON config in swa-db-connections/)
-dab start --config swa-db-connections/staticwebapp.database.config.json
+# 2. Start DAB (uses the JSON config in web/swa-db-connections/)
+dab start --config web/swa-db-connections/staticwebapp.database.config.json
 
 # 3. In another terminal, start SWA emulator and point it at DAB
-swa start . --data-api-location http://localhost:5000
+swa start web --data-api-location http://localhost:5000
 ```
 
 Browse to <http://localhost:4280>. Use the SWA emulator's `Mock authentication` link to sign in as a fake user.
@@ -182,7 +189,7 @@ These are optional but a good idea before letting other people use the app.
 
 ### Restrict who can sign in
 
-Edit [`staticwebapp.config.json`](../staticwebapp.config.json) and replace the `authenticated` role on the `/*` and `/data-api/*` routes with a custom role (e.g. `gantt-user`). Then in the SWA portal under **Role management**, invite specific users and assign them that role.
+Edit [`web/staticwebapp.config.json`](../web/staticwebapp.config.json) and replace the `authenticated` role on the `/*` and `/data-api/*` routes with a custom role (e.g. `gantt-user`). Then in the SWA portal under **Role management**, invite specific users and assign them that role.
 
 ### Backups
 

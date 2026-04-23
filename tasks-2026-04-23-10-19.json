@@ -1,0 +1,609 @@
+{
+  "tasks": [
+    {
+      "person": "0.Unassigned",
+      "task": "Kiosk off line clock in and use with security cards Q3",
+      "start": "",
+      "end": "",
+      "capacityImpact": "high",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "0.Unassigned",
+      "task": "Review Scheduling Options",
+      "start": "",
+      "end": "",
+      "capacityImpact": "medium",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "0.Unassigned",
+      "task": "B2C Replacement",
+      "start": "",
+      "end": "",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "0.Unassigned",
+      "task": "Bulk uplift and increment processing - Ian Daykin Q4 -  see ASQ 10",
+      "start": "",
+      "end": "",
+      "capacityImpact": "low",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "0.Unassigned",
+      "task": "Notification Catalogue",
+      "start": "",
+      "end": "",
+      "capacityImpact": "low",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "0.Unassigned",
+      "task": "PAT Token Replacement",
+      "start": "",
+      "end": "",
+      "capacityImpact": "low",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "0.Unassigned",
+      "task": "Profile Endpoint Review",
+      "start": "",
+      "end": "",
+      "capacityImpact": "low",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "0.Unassigned",
+      "task": "Review Aggregate Data Coupling in Flyway",
+      "start": "",
+      "end": "",
+      "capacityImpact": "low",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "0.Unassigned",
+      "task": "Absence Triggers Phase 2",
+      "start": "",
+      "end": "2026-12-31",
+      "capacityImpact": "low",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "Anthony",
+      "task": "Skills",
+      "start": "2025-11-14",
+      "end": "2026-04-30",
+      "capacityImpact": "high",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Anthony",
+      "task": "Scheduling Improvements",
+      "start": "2026-03-26",
+      "end": "2026-04-03",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Anthony",
+      "task": "Background Checks - Rightgen integration",
+      "start": "2025-11-14",
+      "end": "2026-05-29",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Anthony",
+      "task": "WFM - Flexi Time",
+      "start": "2026-05-01",
+      "end": "2027-03-31",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {
+        "Team starts work (Q3)": "2026-07-01",
+        "Deliver (Q1)": "2027-01-01"
+      }
+    },
+    {
+      "person": "Anthony",
+      "task": "Absence Access Permissions",
+      "start": "2026-03-16",
+      "end": "",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Anthony",
+      "task": "SPIKE - Manager access to claims in payroll",
+      "start": "2026-02-18",
+      "end": "2026-02-27",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Anthony",
+      "task": "Document message flow for Payroll",
+      "start": "2025-11-14",
+      "end": "2026-03-31",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Anthony",
+      "task": "Tidy Up Documentation",
+      "start": "2026-01-26",
+      "end": "2026-04-28",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Anthony",
+      "task": "Documentation Site Support",
+      "start": "2025-11-14",
+      "end": "2026-04-30",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "JD",
+      "task": "Payroll Architecture (Batch Messaging)",
+      "start": "2025-11-10",
+      "end": "2026-06-30",
+      "capacityImpact": "high",
+      "milestones": {
+        "GTN Report - Jacek": "2025-12-08"
+      },
+      "complete": false
+    },
+    {
+      "person": "JD",
+      "task": "Absence Triggers Phase 1",
+      "start": "2026-03-01",
+      "end": "",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "JD",
+      "task": "Container App Data - Cost, Size + Performance",
+      "start": "2026-03-04",
+      "end": "",
+      "capacityImpact": "medium",
+      "milestones": {
+        "Aspiration to start": "2026-03-18"
+      },
+      "complete": false
+    },
+    {
+      "person": "JD",
+      "task": "DLX/Attachments Support",
+      "start": "2025-11-01",
+      "end": "",
+      "capacityImpact": "medium",
+      "milestones": {
+        "First Release": "2026-03-05"
+      }
+    },
+    {
+      "person": "JD",
+      "task": "Expenses",
+      "start": "2026-04-06",
+      "end": "",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "JD",
+      "task": "Tilt  Integration (USA)",
+      "start": "2026-04-16",
+      "end": "",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "JD",
+      "task": "Contract Generation",
+      "start": "2026-02-10",
+      "end": "2026-03-13",
+      "capacityImpact": "medium",
+      "milestones": {
+        "Work Starts Q2": "2026-04-01",
+        "Contractual Commitment": "2026-06-01",
+        "4 weeks": "2026-03-10"
+      },
+      "complete": true
+    },
+    {
+      "person": "JD",
+      "task": "Finance - Multi Tenancy Info",
+      "start": "2026-03-10",
+      "end": "2026-03-31",
+      "capacityImpact": "medium",
+      "milestones": {},
+      "complete": true
+    },
+    {
+      "person": "JD",
+      "task": "Fleet Management",
+      "start": "2026-04-14",
+      "end": "2026-04-30",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {
+        "Review ASQ": "2026-04-14"
+      }
+    },
+    {
+      "person": "JD",
+      "task": "Policy Search HLD",
+      "start": "2026-02-27",
+      "end": "2026-04-30",
+      "capacityImpact": "medium",
+      "milestones": {}
+    },
+    {
+      "person": "JD",
+      "task": "Absence Access Permissions",
+      "start": "2026-03-05",
+      "end": "2026-05-31",
+      "capacityImpact": "medium",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "JD",
+      "task": "Fitness Function Scoring Review",
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "capacityImpact": "medium",
+      "milestones": {}
+    },
+    {
+      "person": "JD",
+      "task": "Ai Screening",
+      "start": "2026-02-13",
+      "end": "",
+      "capacityImpact": "low",
+      "milestones": {}
+    },
+    {
+      "person": "JD",
+      "task": "AuthZ Framework Review",
+      "start": "2026-05-04",
+      "end": "",
+      "capacityImpact": "low",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "JD",
+      "task": "National Minimum Wage",
+      "start": "2025-10-10",
+      "end": "2025-12-05",
+      "capacityImpact": "low",
+      "milestones": {}
+    },
+    {
+      "person": "JD",
+      "task": "Absence Job Relationships",
+      "start": "2025-11-19",
+      "end": "2025-12-09",
+      "capacityImpact": "low",
+      "milestones": {
+        "Target Q1": "2026-01-01"
+      }
+    },
+    {
+      "person": "JD",
+      "task": "Schedule Driven Absence Calculations",
+      "start": "2026-01-01",
+      "end": "2026-01-31",
+      "capacityImpact": "low",
+      "milestones": {}
+    },
+    {
+      "person": "JD",
+      "task": "AE Letters",
+      "start": "2025-11-03",
+      "end": "2026-03-13",
+      "capacityImpact": "low",
+      "milestones": {
+        "Team to start work": "2025-11-17"
+      },
+      "complete": true
+    },
+    {
+      "person": "JD",
+      "task": "Pensioner Payroll",
+      "start": "2026-02-16",
+      "end": "2026-03-13",
+      "capacityImpact": "low",
+      "milestones": {
+        "Finish Analysis": "2026-03-06",
+        "Q2 Start": "2026-04-01"
+      },
+      "complete": true
+    },
+    {
+      "person": "JD",
+      "task": "Claims Approvals",
+      "start": "2025-10-20",
+      "end": "2026-03-31",
+      "capacityImpact": "low",
+      "milestones": {
+        "Team to start work": "2026-10-01",
+        "HLD Handover": "2026-02-20"
+      },
+      "complete": true
+    },
+    {
+      "person": "JD",
+      "task": "Gross to Net",
+      "start": "2026-03-09",
+      "end": "2026-04-30",
+      "capacityImpact": "low",
+      "milestones": {}
+    },
+    {
+      "person": "JD",
+      "task": "Inheritance Wiki Writeup",
+      "start": "2025-06-01",
+      "end": "2026-04-30",
+      "capacityImpact": "low",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "JD",
+      "task": "AI PRD Evaluator",
+      "start": "2026-03-03",
+      "end": "2026-05-31",
+      "capacityImpact": "low",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "JD",
+      "task": "Pay Period Review Log",
+      "start": "2025-12-05",
+      "end": "2026-05-31",
+      "capacityImpact": "low",
+      "milestones": {},
+      "complete": false
+    },
+    {
+      "person": "JD",
+      "task": "Payroll Automation (Scheduling + AE)",
+      "start": "2025-10-24",
+      "end": "2026-05-31",
+      "capacityImpact": "low",
+      "milestones": {
+        "Team Likely to Start": "2026-10-01",
+        "HLD Handover": "2026-02-20"
+      },
+      "complete": false
+    },
+    {
+      "person": "JD",
+      "task": "Smart Architecture Governance",
+      "start": "2025-01-01",
+      "end": "2026-12-31",
+      "capacityImpact": "low",
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Learning - Go1 Integration - PENS",
+      "start": "2026-01-28",
+      "end": "2026-06-26",
+      "capacityImpact": "high",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Shared Read Models - Feature Team Support",
+      "start": "2025-11-01",
+      "end": "",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Auth Architecture for Finance",
+      "start": "2026-03-09",
+      "end": "2026-04-14",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Auth Issue Mitigations - User Offboarding and Rejoining",
+      "start": "2026-03-27",
+      "end": "2026-04-17",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Customer Environment Blueprinting App - Architecture Review",
+      "start": "2026-04-10",
+      "end": "2026-04-17",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Org Security (Phase 2) - Review Architecture Needs",
+      "start": "2026-02-26",
+      "end": "2026-04-17",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {
+        "Product HL approach proposed": "2026-02-26",
+        "feature teams start": "2026-04-01"
+      }
+    },
+    {
+      "person": "Tim",
+      "task": "SMS Fraud - User Creation Re-architecture",
+      "start": "2026-02-09",
+      "end": "2026-04-17",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "ASQ 153 - Learning Surveys - Post Learning Event Surveys",
+      "start": "2026-01-26",
+      "end": "2026-05-01",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Org Security (Phase 2) - Soln Architecture",
+      "start": "2026-02-26",
+      "end": "2026-05-01",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {
+        "Product HL approach proposed": "2026-02-26",
+        "feature teams start": "2026-04-01"
+      }
+    },
+    {
+      "person": "Tim",
+      "task": "Org Security (Phase 2) - Feature Team Support",
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {
+        "feature teams start": "2026-04-01"
+      }
+    },
+    {
+      "person": "Tim",
+      "task": "Customer Support - General Authn Issues",
+      "start": "2025-11-28",
+      "end": "2026-12-31",
+      "capacityImpact": "medium",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Org Security (Standard User Role) - Update Architecture Docs",
+      "start": "2026-03-09",
+      "end": "2026-04-07",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Architecture Standards - IdP Key Retrieval, Caching, and Validity",
+      "start": "2026-03-16",
+      "end": "2026-04-17",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {
+        "requested cybersecurity review": "2026-03-31"
+      }
+    },
+    {
+      "person": "Tim",
+      "task": "Org Security - Removal of 'Everyone' Role",
+      "start": "2026-02-02",
+      "end": "2026-04-17",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Ping Federate Support - Public Integration Documentation",
+      "start": "2026-03-19",
+      "end": "2026-04-17",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Ping Federate Support (Refresh of ID Tokens) - Customer Support",
+      "start": "2026-04-09",
+      "end": "2026-04-24",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Approvals - Update Service Catalogue Documentation",
+      "start": "2026-01-19",
+      "end": "2026-05-01",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Client Credentials for API access - Spike",
+      "start": "2026-04-06",
+      "end": "2026-05-01",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Mobile App Working Group - Actions",
+      "start": "2026-03-09",
+      "end": "2026-05-06",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    },
+    {
+      "person": "Tim",
+      "task": "Shared Read Models - Deployment Options",
+      "start": "2026-04-20",
+      "end": "2026-05-22",
+      "capacityImpact": "low",
+      "complete": false,
+      "milestones": {}
+    }
+  ]
+}
