@@ -1,7 +1,7 @@
 // modals.js — quick-add/edit task modal and per-person import/export modal.
 // Uses callbacks passed by app.js so it doesn't need to know about the API.
 
-import { normaliseImpact, isoDateOnly } from './util.js';
+import { normaliseImpact, normaliseWorkItemType, workItemTypes, isoDateOnly } from './util.js';
 
 // ---------- Quick add / edit ----------
 
@@ -14,6 +14,7 @@ const quickSubmit     = document.getElementById('quickSubmit');
 
 const qmPerson   = document.getElementById('qmPerson');
 const qmTask     = document.getElementById('qmTask');
+const qmWorkItemType = document.getElementById('qmWorkItemType');
 const qmStart    = document.getElementById('qmStart');
 const qmEnd      = document.getElementById('qmEnd');
 const qmImpact   = document.getElementById('qmImpact');
@@ -28,6 +29,16 @@ let editingId = null;          // task.id when editing, null when adding
 let onSaveCb   = null;
 let onDeleteCb = null;
 let getPeopleCb = () => [];
+
+if (qmWorkItemType) {
+    qmWorkItemType.innerHTML = '';
+    workItemTypes.forEach(type => {
+        const opt = document.createElement('option');
+        opt.value = type;
+        opt.textContent = type;
+        qmWorkItemType.appendChild(opt);
+    });
+}
 
 qmNoStart.addEventListener('change', () => {
     if (qmNoStart.checked) {
@@ -104,6 +115,7 @@ export function openAddModal() {
     qmComplete.checked = false;
     qmPerson.value = '';
     qmTask.value = '';
+    qmWorkItemType.value = 'Other';
 
     clearMilestoneRows();
     addMilestoneRow();
@@ -122,6 +134,7 @@ export function openEditModal(task) {
 
     qmPerson.value = task.person || '';
     qmTask.value = task.task || '';
+    qmWorkItemType.value = normaliseWorkItemType(task.workItemType);
     const hasStart = !!(task.start && String(task.start).trim());
     qmNoStart.checked = !hasStart;
     qmStart.disabled = !hasStart;
@@ -174,6 +187,7 @@ export function initQuickModal({ onSave, onDelete, getPeople }) {
         const noStart = qmNoStart.checked;
         const start = noStart ? '' : qmStart.value;
         const end = qmEnd.value;
+        const workItemType = normaliseWorkItemType(qmWorkItemType.value);
         const impact = qmImpact.value || 'medium';
         const complete = qmComplete.checked;
 
@@ -200,6 +214,7 @@ export function initQuickModal({ onSave, onDelete, getPeople }) {
             person, task,
             start: start || '',
             end: end || '',
+            workItemType,
             capacityImpact: impact,
             complete,
             milestones,
@@ -319,6 +334,7 @@ export function initPersonModal({ getAllTasks, importTasksForPerson }) {
                 task: t.task || '',
                 start: t.start || '',
                 end: t.end || '',
+                workItemType: normaliseWorkItemType(t.workItemType),
                 capacityImpact: t.capacityImpact || 'medium',
                 complete: !!t.complete,
                 milestones: t.milestones || {},

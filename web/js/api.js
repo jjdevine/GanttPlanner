@@ -11,9 +11,10 @@ const GRAPHQL_URL = '/data-api/graphql';
 //
 // Server (DAB / SQL) shape:                Client (UI / JSON view) shape:
 //   { id, person, taskName, startDate,       { id, person, task, start, end,
-//     endDate, capacityImpact, complete,       capacityImpact, complete,
+//     endDate, workItemType, capacityImpact,   workItemType, capacityImpact, complete,
 //     milestonesJson }                         milestones: { label: 'yyyy-mm-dd' } }
 // -----------------------------------------------------------------------------
+import { normaliseWorkItemType } from './util.js';
 
 function safeParseMilestones(s) {
     if (!s) return {};
@@ -32,6 +33,7 @@ export function fromServer(row) {
         task: row.taskName || '',
         start: row.startDate || '',
         end: row.endDate || '',
+        workItemType: normaliseWorkItemType(row.workItemType),
         capacityImpact: row.capacityImpact || 'medium',
         complete: !!row.complete,
         milestones: safeParseMilestones(row.milestonesJson),
@@ -44,6 +46,7 @@ export function toServerInput(t) {
         taskName: t.task || '',
         startDate: t.start ? t.start : null,
         endDate:   t.end   ? t.end   : null,
+        workItemType: normaliseWorkItemType(t.workItemType),
         capacityImpact: t.capacityImpact || 'medium',
         complete: !!t.complete,
         milestonesJson: JSON.stringify(t.milestones || {}),
@@ -83,7 +86,7 @@ async function gql(query, variables) {
 // -----------------------------------------------------------------------------
 
 const TASK_FIELDS = `
-    id person taskName startDate endDate capacityImpact complete milestonesJson
+    id person taskName startDate endDate workItemType capacityImpact complete milestonesJson
 `;
 
 export async function listTasks() {

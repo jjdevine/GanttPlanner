@@ -1,12 +1,20 @@
 // util.js — shared pure helpers (no DOM, no API).
 
 export const impactOrder = { high: 0, medium: 1, low: 2 };
+export const workItemTypes = ['Feature', 'Improvement', 'Other'];
 
 export function normaliseImpact(val) {
     if (!val) return 'medium';
     const v = String(val).toLowerCase();
     if (v === 'high' || v === 'medium' || v === 'low') return v;
     return 'medium';
+}
+
+export function normaliseWorkItemType(val) {
+    const v = String(val || '').trim().toLowerCase();
+    if (v === 'feature') return 'Feature';
+    if (v === 'improvement') return 'Improvement';
+    return 'Other';
 }
 
 // Stable identity for UI dedup (toggle list). Prefers id when present.

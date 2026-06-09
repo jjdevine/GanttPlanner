@@ -52,7 +52,7 @@
             {
               "action": "create",
               "fields": {
-                "include": ["Person", "TaskName", "StartDate", "EndDate", "CapacityImpact", "Complete", "MilestonesJson"]
+                "include": ["Person", "TaskName", "StartDate", "EndDate", "WorkItemType", "CapacityImpact", "Complete", "MilestonesJson"]
               }
             },
             {
@@ -61,7 +61,7 @@
             {
               "action": "update",
               "fields": {
-                "include": ["Person", "TaskName", "StartDate", "EndDate", "CapacityImpact", "Complete", "MilestonesJson"]
+                "include": ["Person", "TaskName", "StartDate", "EndDate", "WorkItemType", "CapacityImpact", "Complete", "MilestonesJson"]
               }
             },
             {
@@ -76,6 +76,7 @@
         "TaskName": "taskName",
         "StartDate": "startDate",
         "EndDate": "endDate",
+        "WorkItemType": "workItemType",
         "CapacityImpact": "capacityImpact",
         "Complete": "complete",
         "MilestonesJson": "milestonesJson",
