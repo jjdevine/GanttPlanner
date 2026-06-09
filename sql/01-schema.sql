@@ -24,6 +24,7 @@ BEGIN
         TaskName        nvarchar(500)       NOT NULL,
         StartDate       date                NULL,
         EndDate         date                NULL,
+        WorkItemType    nvarchar(20)        NOT NULL CONSTRAINT DF_Tasks_WorkItemType DEFAULT 'Other',
         CapacityImpact  nvarchar(10)        NOT NULL CONSTRAINT DF_Tasks_Impact DEFAULT 'medium',
         Complete        bit                 NOT NULL CONSTRAINT DF_Tasks_Complete DEFAULT 0,
         MilestonesJson  nvarchar(max)       NOT NULL CONSTRAINT DF_Tasks_Milestones DEFAULT N'{}',
@@ -31,11 +32,28 @@ BEGIN
         UpdatedUtc      datetime2(0)        NOT NULL CONSTRAINT DF_Tasks_Updated DEFAULT SYSUTCDATETIME(),
 
         CONSTRAINT PK_Tasks PRIMARY KEY CLUSTERED (Id),
+        CONSTRAINT CK_Tasks_WorkItemType CHECK (WorkItemType IN ('Feature','Improvement','Other')),
         CONSTRAINT CK_Tasks_Impact CHECK (CapacityImpact IN ('high','medium','low')),
         CONSTRAINT CK_Tasks_Milestones_IsJson CHECK (ISJSON(MilestonesJson) = 1)
     );
 
     CREATE INDEX IX_Tasks_Person ON gantt.Tasks (Person) INCLUDE (TaskName, StartDate, EndDate);
+END
+GO
+
+IF COL_LENGTH('gantt.Tasks', 'WorkItemType') IS NULL
+BEGIN
+    ALTER TABLE gantt.Tasks
+        ADD WorkItemType nvarchar(20) NOT NULL
+            CONSTRAINT DF_Tasks_WorkItemType DEFAULT 'Other';
+END
+GO
+
+IF OBJECT_ID('gantt.CK_Tasks_WorkItemType', 'C') IS NULL
+BEGIN
+    ALTER TABLE gantt.Tasks
+        WITH CHECK ADD CONSTRAINT CK_Tasks_WorkItemType
+        CHECK (WorkItemType IN ('Feature','Improvement','Other'));
 END
 GO
 

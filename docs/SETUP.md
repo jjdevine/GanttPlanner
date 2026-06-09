@@ -88,7 +88,7 @@ sqlcmd -S "$sqlServer.database.windows.net" -d $sqlDb `
        -i sql/03-import.sql
 ```
 
-The generator preserves every field (person, task, dates, capacityImpact, complete, milestones). The generated script is wrapped in a transaction; open it and uncomment the `TRUNCATE` line if you want a clean replace instead of an append.
+The generator preserves every field (person, task, dates, workItemType, capacityImpact, complete, milestones). The generated script is wrapped in a transaction; open it and uncomment the `TRUNCATE` line if you want a clean replace instead of an append.
 
 > Tip: the JSON shape the old app exported (`{ "tasks": [ ... ] }`) **and** a bare array of task objects are both accepted.
 

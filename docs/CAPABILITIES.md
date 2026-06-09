@@ -65,6 +65,7 @@ Click **Quick add task** in the top bar. Fill in:
 
 - **Person** — typeahead from existing people (a new person name creates a new lane).
 - **Task** — short label drawn on the bar.
+- **Work Item Type** — one of `Feature`, `Improvement`, or `Other`.
 - **Unknown start date (floating)** — tick this if you don't know when it'll start. The bar will hatch.
 - **Start date / End date** — `End date` is optional; leave it blank for an open-ended task.
 - **Capacity impact** — high / medium / low (drives the visual prominence).
@@ -123,6 +124,7 @@ A single task as it appears in the JSON view (and in the export):
 {
   "person": "alice",
   "task": "Q3 launch",
+  "workItemType": "Feature",
   "start": "2026-04-15",
   "end": "2026-06-30",
   "capacityImpact": "high",
@@ -141,6 +143,7 @@ The corresponding row in `gantt.Tasks`:
 | Id              | `8b4f…` (uniqueidentifier, server-assigned)                    |
 | Person          | `alice`                                                        |
 | TaskName        | `Q3 launch`                                                    |
+| WorkItemType    | `Feature`                                                     |
 | StartDate       | `2026-04-15`                                                   |
 | EndDate         | `2026-06-30`                                                   |
 | CapacityImpact  | `high`                                                         |
